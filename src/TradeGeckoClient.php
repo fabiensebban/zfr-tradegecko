@@ -530,9 +530,6 @@ class TradeGeckoClient
         }
         catch (Exception $e)
         {
-            // TEMP
-            var_dump("failed");
-
             //Do nothing if fails
         }
     }
