@@ -375,6 +375,11 @@ class TradeGeckoClient
         $command = $this->guzzleClient->getCommand(ucfirst($method), $args);
         $result  = $this->guzzleClient->execute($command);
 
+        if ($command->getName() == 'CreateFulfillment')
+        {
+            $this->sendLog($result['x-runtime'], $result['x-request-id']);
+        }
+
         return $this->unwrapResponseData($command, $result);
     }
 
@@ -513,5 +518,22 @@ class TradeGeckoClient
         ]);
 
         return $this->serializer;
+    }
+
+    private function sendLog($runtime, $requestId)
+    {
+        try {
+            $logGuzzleClient = new Client();
+            $logGuzzleClient->post('https://hooks.slack.com/services/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', [
+                'json' => ['text' => 'Fulfillment Log - Runtime : ' .  $runtime . ' - Request ID : ' . $requestId]
+            ]);
+        }
+        catch (Exception $e)
+        {
+            // TEMP
+            var_dump("failed");
+
+            //Do nothing if fails
+        }
     }
 }

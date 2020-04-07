@@ -7045,6 +7045,18 @@ return [
     'models' => [
         'GenericModel' => [
             'type' => 'object',
+            'properties' => [
+                'x-runtime' => [
+                    'location' => 'header',
+                    'sentAs'   => 'X-Runtime',
+                    'type'     => 'string'
+                ],
+                'x-request-id' => [
+                    'location' => 'header',
+                    'sentAs'   => 'X-Request-Id',
+                    'type'     => 'string'
+                ]
+            ],
             'additionalProperties' => [
                 'location' => 'json',
             ],
