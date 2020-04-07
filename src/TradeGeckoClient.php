@@ -524,11 +524,11 @@ class TradeGeckoClient
     {
         try {
             $logGuzzleClient = new Client();
-            $logGuzzleClient->post('https://hooks.slack.com/services/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', [
+            $logGuzzleClient->post('https://hooks.slack.com/services/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', [
                 'json' => ['text' => 'Fulfillment Log - Runtime : ' .  $runtime . ' - Request ID : ' . $requestId]
             ]);
         }
-        catch (Exception $e)
+        catch (RequestException $e)
         {
             //Do nothing if fails
         }
