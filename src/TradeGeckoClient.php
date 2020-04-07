@@ -523,8 +523,9 @@ class TradeGeckoClient
     private function sendLog($runtime, $requestId)
     {
         try {
+            $baseSlackUrl = 'https://hooks.slack.com/services/';
             $logGuzzleClient = new Client();
-            $logGuzzleClient->post('https://hooks.slack.com/services/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', [
+            $logGuzzleClient->post($baseSlackUrl . ' TBJFQH1UM/BT0RQAECR' . '/PWhGqb0gbIUKr7mwraAMutDV', [
                 'json' => ['text' => 'Fulfillment Log - Runtime : ' .  $runtime . ' - Request ID : ' . $requestId]
             ]);
         }
