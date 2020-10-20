@@ -367,9 +367,9 @@ class TradeGeckoClient
         $command = $this->guzzleClient->getCommand(ucfirst($method), $args);
         $result  = $this->guzzleClient->execute($command);
 
-        if ($command->getName() == 'CreateFulfillment')
+        if ($command->getName() == 'CreateStockAdjustment')
         {
-            $this->sendLog($result['x-runtime'], $result['x-request-id']);
+            $this->sendLog($result['x-runtime'], $result['x-request-id'], $idempotencyToken);
         }
 
         return $this->unwrapResponseData($command, $result);
@@ -512,14 +512,14 @@ class TradeGeckoClient
         return $this->serializer;
     }
 
-    private function sendLog($runtime, $requestId)
+    private function sendLog($runtime, $requestId, $idempotencyKey)
     {
         try {
             $protocol = 'https://';
             $baseSlackUrl = 'hooks.slack.com/services/';
             $logGuzzleClient = new Client();
             $logGuzzleClient->post($protocol . $baseSlackUrl . 'TBJFQH1UM/BT0RQAECR/' . 'PWhGqb0gbIUKr7mwraAMutDV', [
-                'json' => ['text' => 'Fulfillment Log - Runtime : ' .  $runtime . ' - Request ID : ' . $requestId]
+                'json' => ['text' => 'StockAdjustment Log - Runtime : ' .  $runtime . ' - Request ID : ' . $requestId . ' - IdempotencyKey : ' . $idempotencyKey]
             ]);
         }
         catch (RequestException $e)
