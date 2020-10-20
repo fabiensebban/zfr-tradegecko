@@ -481,7 +481,7 @@ class TradeGeckoClient
      * @param  ToArrayInterface $commandResult
      * @return array
      */
-    private function unwrapResponseData(CommandInterface $command, ToArrayInterface $commandResult): array
+    private function unwrapResponseData(CommandInterface $command, ToArrayInterface $commandResult): ?array
     {
         $result = $commandResult->toArray();
 
